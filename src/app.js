@@ -13,16 +13,11 @@ import { FRONTEND_URL } from "./config.js";
 const app = express();
 
 app.use(cors({
-  credentials: true,
-  origin: (origin, callback) => {
-    if (!origin || origin === FRONTEND_URL) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
+  origin: 'https://aromerob1.github.io',
+  credentials: true, 
+  methods: ['GET', 'POST', 'UPDATE', 'DELETE', 'OPTIONS'], 
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
-
 
 app.use(express.json());
 app.use(morgan("dev"));
