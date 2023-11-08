@@ -12,12 +12,17 @@ import { FRONTEND_URL } from "./config.js";
 
 const app = express();
 
-app.use(
-  cors({
-    credentials: true,
-    origin: FRONTEND_URL,
-  })
-);
+app.use(cors({
+  credentials: true,
+  origin: (origin, callback) => {
+    if (!origin || origin === FRONTEND_URL) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
+
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
